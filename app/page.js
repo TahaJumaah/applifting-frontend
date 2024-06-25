@@ -1,95 +1,66 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
+import { Container } from "@mantine/core";
+import { TextInput, Button, Card, Image, Text } from "@mantine/core";
+import { IconUser } from "@tabler/icons-react";
+import { useState } from "react";
+import addName from "./lib/addName";
 export default function Home() {
+  const [input, setInput] = useState("");
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+    <Container size={"lg"} fluid className="input-container">
+      <form id="name-form">
+        <TextInput
+          size="md"
+          radius={"lg"}
+          label="Username"
+          description="Input Username Here to add to the databas"
+          placeholder="Username"
+          value={input}
+          onChange={(e) => {
+            setInput(event.target.value);
+          }}
+        ></TextInput>
+        <Button
+          type="submit"
+          style={{ margin: "1.2em" }}
+          onClick={(event) => {
+            addName(event, input);
+          }}
         >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+          Add User
+        </Button>
+      </form>
+      <Container className="cards-container">
+        <Card
+          shadow="sm"
+          padding={"lg"}
+          radius={"md"}
+          withBorder
+          style={{ width: "30%" }}
         >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+          <Card.Section style={{ display: "flex", justifyContent: "center" }}>
+            <IconUser style={{ width: "100px", height: "100px" }}></IconUser>
+          </Card.Section>
+          <Card.Section style={{ textAlign: "center", padding: "10%" }}>
+            <Text fw={500}>User name here</Text>
+          </Card.Section>
+        </Card>
+        <Card
+          shadow="sm"
+          padding={"lg"}
+          radius={"md"}
+          withBorder
+          style={{ width: "30%" }}
         >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+          <Card.Section style={{ display: "flex", justifyContent: "center" }}>
+            <IconUser style={{ width: "100px", height: "100px" }}></IconUser>
+          </Card.Section>
+          <Card.Section style={{ textAlign: "center", padding: "10%" }}>
+            <Text fw={500}>User name here</Text>
+          </Card.Section>
+        </Card>
+      </Container>
+    </Container>
   );
 }
