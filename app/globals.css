@@ -123,6 +123,10 @@ a {
   display: flex;
   flex-direction: row;
   row-gap: 5%;
-  column-gap: 5%;
+  /* column-gap: 5%; */
   flex-wrap: wrap;
+}
+
+.cards-container div {
+  flex: 0 0 30%;
 }
