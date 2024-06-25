@@ -57,7 +57,7 @@ export default function Home() {
           type="submit"
           style={{ margin: "1.2em" }}
           onClick={(event) => {
-            getAllNames(event);
+            addName(event, input);
           }}
         >
           Add User
