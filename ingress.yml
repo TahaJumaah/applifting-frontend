@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tju-ingress
+  namespace: tju
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - "tahajumaah.bootcamp.opslifting.cz"
+      secretName: tahajumaah
+  ingressClassName: nginx
+
+  rules:
+    - host: "tahajumaah.bootcamp.opslifting.cz"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 3000

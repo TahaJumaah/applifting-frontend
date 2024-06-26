@@ -1,6 +1,4 @@
 export default async function getAllNames() {
-  event.preventDefault();
-
   try {
     const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_SERVER, {
       method: "GET",

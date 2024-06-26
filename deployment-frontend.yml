@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: applifting-frontend
+  labels:
+    app: applifting-frontend
+spec: # This should be aligned with metadata, not nested under it
+  replicas: 1
+  selector:
+    matchLabels:
+      app: applifting-frontend
+  template:
+    metadata:
+      labels:
+        app: applifting-frontend
+    spec:
+      containers:
+        - name: applifting-frontend-deployment
+          image: hhhhyy36/applifting-frontend
+          ports:
+            # - containerPort: "3000"
+
+          env:
+            - name: NEXT_PUBLIC_BACKEND_SERVER
+              value: "http://backend"

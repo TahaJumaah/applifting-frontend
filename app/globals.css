@@ -121,12 +121,19 @@ a {
 
 .cards-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: row;
-  row-gap: 5%;
-  /* column-gap: 5%; */
   flex-wrap: wrap;
+  gap: 1.2em;
+  border-top: 4px dashed yellowgreen;
+  padding-top: 10%;
 }
 
-.cards-container div {
+.card {
+  display: flex;
+  flex-direction: column;
   flex: 0 0 30%;
+  justify-content: center;
+  align-items: center;
 }

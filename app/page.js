@@ -6,38 +6,51 @@ import { IconUser } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
 import addName from "./lib/addName";
 import getAllNames from "./lib/getAllNames";
+import deleteName from "./lib/deleteName";
 export default function Home() {
   const [input, setInput] = useState("");
   const [users, setUsers] = useState([]);
+  const [refreshNames, setRefreshNames] = useState(false);
+  useEffect(() => {
+    const fetchNames = async () => {
+      const names = await getAllNames();
+      setUsers(names ? names : []);
+    };
+
+    fetchNames();
+  }, [refreshNames]);
   useEffect(() => {
     async function fetchNames() {
       const names = await getAllNames();
-      setUsers(names);
+      setUsers(names || []);
     }
     fetchNames();
   }, []);
 
-  const usersList = users.map((user) => {
-    return (
-      <>
-        <Card
-          key={user.uuid}
-          shadow="sm"
-          padding={"lg"}
-          radius={"md"}
-          withBorder
-          style={{ width: "30%" }}
-        >
-          <Card.Section style={{ display: "flex", justifyContent: "center" }}>
-            <IconUser style={{ width: "100px", height: "100px" }}></IconUser>
-          </Card.Section>
-          <Card.Section style={{ textAlign: "center", padding: "10%" }}>
-            <Text fw={500}>{user.name}</Text>
-          </Card.Section>
-        </Card>
-      </>
-    );
-  });
+  const usersList = Array.isArray(users)
+    ? users.map((user) => {
+        return (
+          <>
+            <div className="card" key={user.uuid}>
+              <IconUser style={{ width: "100px", height: "100px" }}></IconUser>
+              <h3 key={user.uuid}>{user.name}</h3>
+              <Button
+                variant="filled"
+                color="red"
+                onClick={async (event) => {
+                  event.preventDefault();
+                  const response = await deleteName(user.uuid);
+                  console.log(response);
+                  setRefreshNames((prev) => !prev);
+                }}
+              >
+                Delete User
+              </Button>
+            </div>
+          </>
+        );
+      })
+    : null;
 
   return (
     <Container size={"lg"} fluid className="input-container">
@@ -46,7 +59,7 @@ export default function Home() {
           size="md"
           radius={"lg"}
           label="Username"
-          description="Input Username Here to add to the databas"
+          description="Input Username Here to add to the database"
           placeholder="Username"
           value={input}
           onChange={(e) => {
@@ -54,10 +67,15 @@ export default function Home() {
           }}
         ></TextInput>
         <Button
+          value={"default"}
+          color="green"
           type="submit"
           style={{ margin: "1.2em" }}
-          onClick={(event) => {
-            addName(event, input);
+          onClick={async (event) => {
+            event.preventDefault();
+            await addName(event, input);
+            setInput("");
+            setRefreshNames((prev) => !prev);
           }}
         >
           Add User
